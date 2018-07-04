@@ -1,0 +1,12 @@
+{
+  "generator-fangfe": {
+    "projectType": "vue",
+    "projectName": "GongyusystemH5",
+    "description": "公寓管家app嵌入h5页面",
+    "author": "lichunyan",
+    "email": "lichunyan07@58ganji.com",
+    "version": "1.0.0",
+    "styleType": "less",
+    "disabledDll": true
+  }
+}

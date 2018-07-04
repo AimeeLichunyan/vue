@@ -1,0 +1,15 @@
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "list|0-10": [
+      {
+        "infoId": "@id()",
+        "title": "整租 东沙各庄村委会 1室0厅1卫",
+        "picUrl": "//pic4.58cdn.com.cn/mobile/big/n_v1bkuymc6ygbnvthtjc5uq.jpg",
+        "desc": "公寓·9㎡·朝南",
+        "price|500-5000": 5000
+      }
+    ]
+  }
+}
