@@ -85,9 +85,13 @@
           if (Math.abs(this.disX) < (btnWidth / 2)) {
             this.slideEffect = 'transform:translateX(0px)';
           } else {
-            this.slideEffect = 'transform:translateX(' + (-btnWidth) + 'px)';  // 这里为什么不能用this.dist 因为是想让它超一定长度是变成下一个，而不是移动一定的长度
+            if (Math.abs(this.disX) > btnWidth + (btnWidth / 2)) {
+              this.slideEffect = 'transform:translateX(' + (-btnWidth * 2) + 'px)'; // 这里为什么不能用this.dist 因为是想让它超一定长度是变成下一个，而不是移动一定的长度
             // 让字段显示出来，或者写你需要的逻辑
             // this.isShow = true
+            } else {
+              this.slideEffect = 'transform:translateX(' + (-btnWidth) + 'px)';
+            }
           }
         }
       }
