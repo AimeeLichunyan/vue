@@ -2,108 +2,132 @@
 
 <template>
 
-  <article class="page">
-    <!--搜索-->
-    <section class="search">
-      <Input :type="searchData.type" :placeholder="searchData.placeholder" v-model="searchData.value"/>
-    </section>
+  <div class="swiper-wrap">
+    <!-- <div class="small-img" ref="imgWrap" @click="onClick" @touchstart='touchStart' @touchmove='touchMove' @touchend='touchEnd' :style='slideEffect'>
+      <img :src="imgArr[index]" alt="">
+    </div> -->
+    <div class="allImg-wrap">
+      <div class="img-wrap" ref="imgWrap" @click="onClick" @touchstart='touchStart' @touchmove='touchMove' @touchend='touchEnd' :style='slideEffect'>
+       <img src="http://img05.tooopen.com/images/20150820/tooopen_sy_139205349641.jpg" alt="">
+      </div>
+      <div class="img-wrap" ref="imgWrap" @click="onClick" @touchstart='touchStart' @touchmove='touchMove' @touchend='touchEnd' :style='slideEffect'>
+        <img src="http://img.zcool.cn/community/01d881579dc3620000018c1b430c4b.JPG@3000w_1l_2o_100sh.jpg" alt="">
+      </div>
+      <div class="img-wrap" ref="imgWrap" @click="onClick" @touchstart='touchStart' @touchmove='touchMove' @touchend='touchEnd' :style='slideEffect'>
+        <img src="http://img.zcool.cn/community/01690955496f930000019ae92f3a4e.jpg@2o.jpg" alt="">
+      </div>
 
-    <!--列表-->
-    <section class="list" v-if="houseDate.list.length>0">
-      <house-item v-for="(item,index) in houseDate.list" :key="index" :itemData="item"/>
-    </section>
-  </article>
+    </div>
+  </div>
 </template>
 
 <script>
   /* 页面所需组件 */
-  import HouseItem from '@/components/house-item/index.vue';
-  import Input from '@/components/input/index.vue';
-
-  /* 混入 */
-  import BaseMixin from '@/mixins/base';
-
   export default {
-    mixins: [BaseMixin],
     data () {
       return {
-        // 搜索数据
-        searchData: {
-          type: 'text',
-          value: '',
-          placeholder: '请输入房源相关信息'
-        },
-        // 列表数据
-        houseDate: {
-          // 每页多少条
-          pageSize: 10,
-          // 第几页
-          pageNum: 1,
-          list: []
-        }
+        index: 0,
+        downX: 0,
+        moveX: 0,
+        disX: 0,
+        startX: 0,
+        slideEffect: '',
+        imgArr: [
+          'http://img05.tooopen.com/images/20150820/tooopen_sy_139205349641.jpg',
+          'http://img.zcool.cn/community/01d881579dc3620000018c1b430c4b.JPG@3000w_1l_2o_100sh.jpg',
+          'http://img.zcool.cn/community/01690955496f930000019ae92f3a4e.jpg@2o.jpg'
+        ]
       }
     },
     watch: {
-      'searchData.value': function (val, old) {
-        if (val) {
-          this.fetchData();
-        }
-      }
     },
     created: function () {
     },
     mounted () {
     },
     methods: {
-      /**
-       * 获取数据：列表信息
-       */
-      fetchData () {
-        this.$http.get(this.$api.apiDemoList, {
-          pageSize: this.pageSize,
-          pageNum: this.pageNum,
-          keyword: this.searchData.value
-        })
-          .then(res => {
-            if (res && res.code == 0 && res.data && res.data.list) {
-              this.houseDate.list = res.data.list;
-            } else {
-              this.$toast('数据异常请稍后再试！');
-            }
-          })
-          .catch(err => {
-            console.error(err);
-            this.$toast('服务器异常请稍后再试！');
-          })
+      onClick () {
+        console.log(this.$refs)
+      },
+      touchStart (ev) {
+        ev = ev || event;
+        ev.preventDefault();
+        if (ev.touches.length == 1) { // tounches类数组，等于1时表示此时有只有一只手指在触摸屏幕
+          this.startX = ev.touches[0].clientX; // 记录开始位置
+        }
+      },
+      touchMove (event) {
+        console.log(event);
+        // 滑动时距离浏览器左侧的距离
+        this.moveX = event.touches[0].clientX;
+        let btnWidth = this.$refs.imgWrap.offsetWidth;
+        console.log(btnWidth);
+        console.log(this.moveX);
+        // 实时的滑动的距离-起始位置=实时移动的位置
+        this.disX = this.moveX - this.startX;
+        // console.log(this.disX)
+        if (this.disX <= 0) {
+          // this.index = this.index + 1;
+          this.slideEffect = 'transform:translateX(' + this.disX + 'px)';
+        } else if (this.disX > 0) {
+          this.slideEffect = 'transform:translateX(' + this.disX + 'px)';
+        }
+      },
+      touchEnd (ev) {
+        ev = ev || event;
+        ev.preventDefault();
+        let btnWidth = this.$refs.imgWrap.offsetWidth;
+        console.log(btnWidth);
+        if (ev.changedTouches.length == 1) {
+          let endX = ev.changedTouches[0].clientX;
+          this.disX = endX - this.startX;
+          console.log(this.disX)
+          if (Math.abs(this.disX) < (btnWidth / 2)) {
+            this.slideEffect = 'transform:translateX(0px)';
+          } else {
+            this.slideEffect = 'transform:translateX(' + (-btnWidth) + 'px)';  // 这里为什么不能用this.dist 因为是想让它超一定长度是变成下一个，而不是移动一定的长度
+            // 让字段显示出来，或者写你需要的逻辑
+            // this.isShow = true
+          }
+        }
       }
     },
     components: {
-      HouseItem,
-      Input
     }
   }
 </script>
 
 <style rel="stylesheet/less" lang="less">
   @import '../../assets/css/base.less';
-
-  .page {
+  .swiper-wrap {
+    width: 750px;
+    height: 521px;
     position: relative;
-    width: 100%;
-    height: 100%;
-    background: #F6F6F6;
-
-    /* 搜索 */
-    .search {
-      width: 100%;
-      padding: 20px 30px;
-      box-sizing: border-box;
-      background: #fff;
+    overflow: hidden;
+    .allImg-wrap {
+      // display: none;
+       width:10240px;
+      height: 512px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      .img-wrap {
+        float: left;
+        height: 100%;
+        width: 750px;
+        img {
+          height: 100%;
+          width: 100%
+        }
+      }
     }
-
-    /* 列表 */
-    .list {
-      width: 100%;
+    .small-img {
+      height: 100%;
+        width: 750px;
+        img {
+          height: 100%;
+          width: 100%
+        }
     }
   }
 </style>

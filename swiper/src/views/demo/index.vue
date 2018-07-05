@@ -3,15 +3,6 @@
 <template>
 
   <article class="page">
-    <!--搜索-->
-    <section class="search">
-      <Input :type="searchData.type" :placeholder="searchData.placeholder" v-model="searchData.value"/>
-    </section>
-
-    <!--列表-->
-    <section class="list" v-if="houseDate.list.length>0">
-      <house-item v-for="(item,index) in houseDate.list" :key="index" :itemData="item"/>
-    </section>
   </article>
 </template>
 
