@@ -15,7 +15,7 @@ module.exports = function (env) {
     entry: {},
     output: {
       path: path.resolve(__dirname, '../build'),
-      filename: '[name].js',
+      filename: '[name].js'
     },
     optimization: {
       occurrenceOrder: true,
@@ -30,7 +30,7 @@ module.exports = function (env) {
           default: {
             minChunks: 2,
             priority: -20,
-            reuseExistingChunk: true,
+            reuseExistingChunk: true
           },
           vendor: {
             name: 'vendor',
@@ -53,22 +53,14 @@ module.exports = function (env) {
         return /Zepto|zepto|jQuery|WBAPP/.test(content);
       },
       rules: [
-        {
-          test: /\.(js|vue)$/,
-          loader: 'eslint-loader',
-          enforce: 'pre',
-          exclude: /(node_modules|build)/,
-          options: {
-            formatter: require('eslint-friendly-formatter'),
-          }
-        },
+        // ≈·
         {
           test: /\.css$/,
           use: ExtractTextPlugin.extract({
             fallback: 'style-loader',
             use: [
               'css-loader',
-              'postcss-loader',
+              'postcss-loader'
             ]
           })
         },
@@ -79,7 +71,7 @@ module.exports = function (env) {
             use: [
               'css-loader',
               'postcss-loader',
-              'less-loader',
+              'less-loader'
             ]
           })
         },
