@@ -15,6 +15,9 @@
         <img src="http://img.zcool.cn/community/01d881579dc3620000018c1b430c4b.JPG@3000w_1l_2o_100sh.jpg" alt="2" data-index="2">
       </div> -->
     </Swiper>
+    <slot-popup v-if="show" @close="close">
+        <p class="popup">这里是slot内容</p>
+      </slot-popup>
   </div>
 </template>
 
@@ -24,6 +27,8 @@
   export default {
     data () {
       return {
+        show: true,
+        close: true,
         index: 0,
         downX: 0,
         moveX: 0,

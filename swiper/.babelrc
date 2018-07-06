@@ -13,9 +13,8 @@
 	],
 	"plugins": [
     "transform-runtime",
-    [
-      "component",
-      []
-    ]
-  ]
+		["component", [
+			{"libraryName": "f-ui","style": true}
+		]]]
+
 }
