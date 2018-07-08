@@ -3,21 +3,27 @@
 <template>
 
   <div class="swiper-wrap">
+    <div class="swipe-container" ref="swipe-container" @touchstart='doTouchStart'>
+        <div class="swipe-wrap" ref="swipe-wrap" :style="{width:warpWidth,'transform':transLate}">
+            <slot></slot>
+            <!--warpWidth transLate -->
+        </div>
+    </div>
     <!-- <div class="small-img" ref="imgWrap" @click="onClick" @touchstart='touchStart' @touchmove='touchMove' @touchend='touchEnd' :style='slideEffect'>
       <img :src="imgArr[index]" alt="">
     </div> -->
-    <div class="allImg-wrap" :style='slideEffect'>
+    <!-- <div class="allImg-wrap" :style='slideEffect'>
       <div v-for="(value,index) in imgArr" :key="index" class="img-wrap" ref="imgWrap" @click="onClick" @touchstart='touchStart(index)' @touchmove='touchMove(index)' @touchend='touchEnd(index)' :value='index'>
         <img :src="value" alt="">
-      </div>
+      </div> -->
       <!-- <div class="img-wrap" ref="imgWrap" @click="onClick" @touchstart='touchStart' @touchmove='touchMove' @touchend='touchEnd' value="2">
         <img src="http://img.zcool.cn/community/01d881579dc3620000018c1b430c4b.JPG@3000w_1l_2o_100sh.jpg" alt="2" data-index="2">
       </div>
       <div class="img-wrap" ref="imgWrap" @click="onClick" @touchstart='touchStart' @touchmove='touchMove' @touchend='touchEnd' value="3">
         <img src="http://img.zcool.cn/community/01690955496f930000019ae92f3a4e.jpg@2o.jpg" alt="3" data-index="3">
-      </div> -->
+      </div> 
 
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -43,6 +49,7 @@
     watch: {
     },
     created: function () {
+      this.dragState = {};
     },
     mounted () {
     },
@@ -51,11 +58,12 @@
         // console.log(this.$refs)
         console.log(event.target.getAttribute('class'));
       },
-      touchStart (index, ev) {
+      doTouchStart (index, ev) {
         ev = ev || event;
         ev.preventDefault();
         // this.imgIndex = parseInt(ev.target.alt);
         // console.log(ev.target.alt);
+        let touch = ev.touches[0];
         console.log(index);
         if (ev.touches.length == 1) { // tounches类数组，等于1时表示此时有只有一只手指在触摸屏幕
           this.startX = ev.touches[0].clientX; // 记录开始位置
@@ -68,13 +76,6 @@
         ev = ev || event;
         ev.preventDefault();
         this.moveX = event.touches[0].clientX * this.imgIndex;
-        // 图片的宽度
-        // let btnWidth = this.$refs.imgWrap[0].offsetWidth;
-        // console.log(this.moveX)
-        // console.log(this.startX);
-        // let btnWidth = this.$refs.imgWrap.offsetWidth;
-        // console.log(btnWidth);
-        // console.log(this.moveX);
         // 实时的滑动的距离-起始位置=实时移动的位置
         this.disX = (this.moveX - this.startX)
         // console.log(this.disX)

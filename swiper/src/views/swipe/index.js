@@ -2,11 +2,11 @@
 import Vue from 'vue'
 import VueExt from '@/plugins'
 import IndexView from './index.vue'
-import {SlotPopup} from 'f-ui'
+// import {SlotPopup} from 'f-ui'
 Vue.config.productionTip = false
 
 Vue.use(VueExt)
-Vue.use(SlotPopup);
+// Vue.use(SlotPopup);
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

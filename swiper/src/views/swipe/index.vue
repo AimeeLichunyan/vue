@@ -3,7 +3,7 @@
 <template>
 
   <div class="index">
-    <Swiper>
+    <!-- <Swiper> -->
       <!-- <div slot="swiper" v-for="(value,index) in imgArr" :key="index">
         {{value}}
         <img:src="{{value}}" alt="">
@@ -14,33 +14,33 @@
       <div slot="swiper">
         <img src="http://img.zcool.cn/community/01d881579dc3620000018c1b430c4b.JPG@3000w_1l_2o_100sh.jpg" alt="2" data-index="2">
       </div> -->
-    </Swiper>
-    <slot-popup v-if="show" @close="close">
+    <!-- </Swiper> -->
+    <div>
+      <Swipe>
+      <div class="swipe-item">
+        <img src="http://img07.tooopen.com/images/20170316/tooopen_sy_201956178977.jpg" alt="2" data-index="2">
+      </div>
+      <div class="swipe-item">
+        <img src="http://img.zcool.cn/community/01d881579dc3620000018c1b430c4b.JPG@3000w_1l_2o_100sh.jpg" alt="2" data-index="2">
+      </div>
+      <div class="swipe-item">
+        <img src="http://img.zcool.cn/community/01690955496f930000019ae92f3a4e.jpg@2o.jpg" alt="3" data-index="3">
+      </div> 
+    </Swipe>
+    </div>
+    <!-- <slot-popup v-if="show" @close="close">
         <p class="popup">这里是slot内容</p>
-      </slot-popup>
+      </slot-popup> -->
   </div>
 </template>
 
 <script>
   /* 页面所需组件 */
   import Swiper from './swiper';
+  import z_swipe from './swipe'
   export default {
     data () {
       return {
-        show: true,
-        close: true,
-        index: 0,
-        downX: 0,
-        moveX: 0,
-        disX: 0,
-        startX: 0,
-        slideEffect: 0,
-        imgIndex: 1,
-        imgArr: [
-          'http://img05.tooopen.com/images/20150820/tooopen_sy_139205349641.jpg',
-          'http://img.zcool.cn/community/01d881579dc3620000018c1b430c4b.JPG@3000w_1l_2o_100sh.jpg',
-          'http://img.zcool.cn/community/01690955496f930000019ae92f3a4e.jpg@2o.jpg'
-        ]
       }
     },
     watch: {
@@ -52,7 +52,8 @@
     methods: {
     },
     components: {
-      Swiper
+      Swiper,
+      'Swipe':z_swipe
     }
   }
 </script>
