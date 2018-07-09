@@ -95,25 +95,28 @@
           let disX = endX - this.startX;
           let length = this.childrenLength;
           let containerWidth = this.containerWidth;
-          if (disX < 0) {
+          if (disX < 0) { // 滑动出现下一张
             if (this.startIndex >= length - 1) {
-              this.startIndex = -1;
+              this.startIndex = length - 1;
             }
-            this.startIndex++;
-            // if (Math.abs(disX) < (containerWidth / 2)) {
-            //   // 如果移动的距离不足容器的一半，则不会是下一个图片
-            //   this.transLate = `translateX(-${containerWidth * (index - 1)}px)`;
-            // } else {
-            this.transLate = `translateX(-${containerWidth * this.startIndex}px)`;
-            // }
-          } else if (disX > 0) {
+            if (Math.abs(disX) < (containerWidth / 2)) {
+              // 如果移动的距离不足容器的一半，则不会是下一个图片
+              console.log(this.startIndex);
+              this.transLate = `translateX(-${containerWidth * this.startIndex}px)`;
+            } else {
+              this.transLate = `translateX(-${containerWidth * this.startIndex}px)`;
+              this.startIndex++;
+            }
+          } else if (disX > 0) { // 滑动出现上一张
             if (this.startIndex <= 0) {
-              this.startIndex = length;
+              this.startIndex = 1;
             }
             this.startIndex--;
             // if (Math.abs(disX) < (containerWidth / 2)) { // 如果移动的距离不足容器的一半，则不会是下一个图片
+            //   // let index = this.startIndex;
             //   this.transLate = `translateX(-${containerWidth * this.startIndex}px)`;
             // } else {
+            console.log(this.startIndex--)
             this.transLate = `translateX(-${containerWidth * this.startIndex}px)`;
             // }
           }

@@ -37,7 +37,7 @@
 <script>
   /* 页面所需组件 */
   import Swiper from './swiper';
-  import z_swipe from './swipe'
+  import z_swipe from './swipe';
   export default {
     data () {
       return {
