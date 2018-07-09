@@ -15,7 +15,7 @@
         <img src="http://img.zcool.cn/community/01d881579dc3620000018c1b430c4b.JPG@3000w_1l_2o_100sh.jpg" alt="2" data-index="2">
       </div> -->
     <!-- </Swiper> -->
-    <div>
+    <div class="container">
       <Swipe>
       <div class="swipe-item">
         <img src="http://img07.tooopen.com/images/20170316/tooopen_sy_201956178977.jpg" alt="2" data-index="2">
@@ -37,7 +37,7 @@
 <script>
   /* 页面所需组件 */
   import Swiper from './swiper';
-  import z_swipe from './swipe'
+  import z_swipe from './newswipe'
   export default {
     data () {
       return {
@@ -60,6 +60,9 @@
 
 <style rel="stylesheet/less" lang="less">
   @import '../../assets/css/base.less';
+  .container{
+    height: 400px;
+  }
   .swiper-wrap {
     width: 750px;
     height: 521px;
