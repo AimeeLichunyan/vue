@@ -21,8 +21,7 @@
       </div>
       <div class="img-wrap" ref="imgWrap" @click="onClick" @touchstart='touchStart' @touchmove='touchMove' @touchend='touchEnd' value="3">
         <img src="http://img.zcool.cn/community/01690955496f930000019ae92f3a4e.jpg@2o.jpg" alt="3" data-index="3">
-      </div> 
-
+      </div>
     </div> -->
   </div>
 </template>
