@@ -72,50 +72,83 @@
         }
       },
       doTouchMove (ev) {
-        // console.log(event);
         // 滑动时距离浏览器左侧的距离
         ev = ev || event;
         ev.preventDefault();
-        let touch = ev.touches[0];
         this.moveX = event.touches[0].clientX;
-        console.log(touch.pageX);
         // 实时的滑动的距离-起始位置=实时移动的位置
-        this.disX = (this.moveX - this.startX)
+        let disX = (this.moveX - this.startX)
         let startIndex = this.startIndex;
         let containerWidth = this.containerWidth;
-        console.log(this.disX)
-        if (this.disX <= 0) {
-          console.log(startIndex)
-          if (startIndex === this.childrenLength - 1) {
-            this.transLate = `translate(0px)`;
-          } else {
-            this.transLate = `translate(${this.disX - startIndex * containerWidth}px)`;
-          }
-        } else if (this.disX > 0) {
-          this.transLate = `translate(${this.disX}px)`;
+        if (disX < 0) {
+          this.transLate = `translate(${disX - startIndex * containerWidth}px)`;
+        } else {
+          this.transLate = `translate(${Math.abs(startIndex * containerWidth - disX)}px)`;
         }
       },
       doTouchEnd (ev) {
         ev = ev || event;
         ev.preventDefault();
-        // let btnWidth = this.$refs;
-        let containerWidth = this.containerWidth
         if (ev.changedTouches.length == 1) {
-          let endX = ev.changedTouches[0].clientX;
-          this.disX = (endX - this.startX);
-          // console.log(this.containerWidth)
-          if (Math.abs(this.disX) < (containerWidth / 2)) { // 如果移动的距离不足容器的一半，则不会是下一个图片
-            this.transLate = `translate(-${containerWidth * this.startIndex}px)`;
-          } else {
+          let touch = ev.changedTouches[0];
+          let endX = touch.clientX;
+          let disX = endX - this.startX;
+          let length = this.childrenLength;
+          let containerWidth = this.containerWidth;
+          if (disX < 0) {
+            if (this.startIndex >= length - 1) {
+              this.startIndex = -1;
+            }
             this.startIndex++;
-            if (this.startIndex < this.childrenLength) {
-              this.transLate = `translate(-${containerWidth * this.startIndex}px)`;
+            // if (Math.abs(disX) < (containerWidth / 2)) {
+            //   // 如果移动的距离不足容器的一半，则不会是下一个图片
+            //   this.transLate = `translateX(-${containerWidth * (index - 1)}px)`;
+            // } else {
+            this.transLate = `translateX(-${containerWidth * this.startIndex}px)`;
+            // }
+          } else if (disX > 0) {
+            if (this.startIndex <= 0) {
+              this.startIndex = length;
             }
-            if (this.startIndex >= this.childrenLength) {
-              this.startIndex = 0;
-              this.transLate = `translate(-${containerWidth * this.startIndex}px,0px)`;
-            }
+            this.startIndex--;
+            // if (Math.abs(disX) < (containerWidth / 2)) { // 如果移动的距离不足容器的一半，则不会是下一个图片
+            //   this.transLate = `translateX(-${containerWidth * this.startIndex}px)`;
+            // } else {
+            this.transLate = `translateX(-${containerWidth * this.startIndex}px)`;
+            // }
           }
+          //   let endX = ev.changedTouches[0].clientX;
+          //   let disX = (endX - this.startX);
+          //   console.log(disX)
+          //   // console.log(this.containerWidth)
+          //   if (Math.abs(disX) < (containerWidth / 2)) { // 如果移动的距离不足容器的一半，则不会是下一个图片
+          //     this.transLate = `translateX(-${containerWidth * this.startIndex}px)`;
+          //   } else if (disX < 0) {
+          //     // alert(1)
+          //     if (this.startIndex > this.childrenLength) {
+          //       this.startIndex = 1;
+          //     }
+          //     this.startIndex++;
+          //     if (this.startIndex < this.childrenLength) {
+          //       this.transLate = `translateX(-${containerWidth * this.startIndex}px)`;
+          //     } else if (this.startIndex >= this.childrenLength) {
+          //       // this.startIndex = 1;
+          //       console.log(this.startIndex)
+          //       this.transLate = `translateX(-${containerWidth * this.startIndex}px,0px)`;
+          //     }
+          //   } else if (disX >= 0) {
+          //     console.log(this.startIndex);
+          //     if (Math.abs(disX) < (containerWidth / 2)) { // 如果移动的距离不足容器的一半，则不会是下一个图片
+          //       this.transLate = `translateX(${containerWidth * this.startIndex}px)`;
+          //     }
+          //     this.startIndex++;
+          //     // if (this.startIndex < this.childrenLength) {
+          //     //   this.transLate = `translate(-${containerWidth * this.startIndex}px)`;
+          //     // } else if (this.startIndex >= this.childrenLength) {
+          //     //   this.startIndex = 0;
+          //     //   this.transLate = `translate(-${containerWidth * this.startIndex}px,0px)`;
+          //     // }
+          //   }
         }
       }
 
