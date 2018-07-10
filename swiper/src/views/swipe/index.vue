@@ -28,16 +28,18 @@
       </div> 
     </Swipe>
     </div>
-    <!-- <slot-popup v-if="show" @close="close">
-        <p class="popup">这里是slot内容</p>
-      </slot-popup> -->
+
   </div>
 </template>
 
 <script>
   /* 页面所需组件 */
-  import Swiper from './swiper';
-  import z_swipe from './newswipe'
+  import Swiper from './swiper.vue';
+  import Slide from './slide.vue';
+
+export {
+    Swiper, Slide
+}
   export default {
     data () {
       return {
@@ -53,7 +55,7 @@
     },
     components: {
       Swiper,
-      'Swipe':z_swipe
+      Slide
     }
   }
 </script>
