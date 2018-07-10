@@ -78,12 +78,20 @@
         this.moveX = event.touches[0].clientX;
         // 实时的滑动的距离-起始位置=实时移动的位置
         let disX = (this.moveX - this.startX)
+        console.log(disX)
         let startIndex = this.startIndex;
         let containerWidth = this.containerWidth;
         if (disX < 0) {
           this.transLate = `translate(${disX - startIndex * containerWidth}px)`;
         } else {
-          this.transLate = `translate(${Math.abs(startIndex * containerWidth - disX)}px)`;
+          // console.log(disX)
+          // console.log(startIndex)
+          console.log(startIndex)
+          if (startIndex == 0) {
+            this.transLate = `translate(${Math.abs(startIndex * containerWidth - disX)}px)`;
+          } else {
+            this.transLate = `translate(-${Math.abs(startIndex * containerWidth - disX)}px)`;
+          }
         }
       },
       doTouchEnd (ev) {
@@ -95,63 +103,34 @@
           let disX = endX - this.startX;
           let length = this.childrenLength;
           let containerWidth = this.containerWidth;
+          // console.log(this.startIndex)
           if (disX < 0) { // 滑动出现下一张
             if (this.startIndex >= length - 1) {
-              this.startIndex = length - 1;
+              this.startIndex = length - 2;
             }
+            this.startIndex++;
             if (Math.abs(disX) < (containerWidth / 2)) {
               // 如果移动的距离不足容器的一半，则不会是下一个图片
-              console.log(this.startIndex);
               this.transLate = `translateX(-${containerWidth * this.startIndex}px)`;
             } else {
               this.transLate = `translateX(-${containerWidth * this.startIndex}px)`;
-              this.startIndex++;
             }
+            // console.log(this.startIndex);
           } else if (disX > 0) { // 滑动出现上一张
+            // console.log(this.startIndex)
             if (this.startIndex <= 0) {
               this.startIndex = 1;
             }
-            this.startIndex--;
-            // if (Math.abs(disX) < (containerWidth / 2)) { // 如果移动的距离不足容器的一半，则不会是下一个图片
-            //   // let index = this.startIndex;
-            //   this.transLate = `translateX(-${containerWidth * this.startIndex}px)`;
-            // } else {
-            console.log(this.startIndex--)
-            this.transLate = `translateX(-${containerWidth * this.startIndex}px)`;
-            // }
+            // console.log(this.startIndex)
+            this.startIndex = this.startIndex - 1;
+            if (Math.abs(disX) < (containerWidth / 2)) { // 如果移动的距离不足容器的一半，则不会是下一个图片
+              // let index = this.startIndex;
+              this.transLate = `translateX(-${containerWidth * this.startIndex}px)`;
+            } else {
+              console.log(this.startIndex)
+              this.transLate = `translateX(-${containerWidth * this.startIndex}px)`;
+            }
           }
-          //   let endX = ev.changedTouches[0].clientX;
-          //   let disX = (endX - this.startX);
-          //   console.log(disX)
-          //   // console.log(this.containerWidth)
-          //   if (Math.abs(disX) < (containerWidth / 2)) { // 如果移动的距离不足容器的一半，则不会是下一个图片
-          //     this.transLate = `translateX(-${containerWidth * this.startIndex}px)`;
-          //   } else if (disX < 0) {
-          //     // alert(1)
-          //     if (this.startIndex > this.childrenLength) {
-          //       this.startIndex = 1;
-          //     }
-          //     this.startIndex++;
-          //     if (this.startIndex < this.childrenLength) {
-          //       this.transLate = `translateX(-${containerWidth * this.startIndex}px)`;
-          //     } else if (this.startIndex >= this.childrenLength) {
-          //       // this.startIndex = 1;
-          //       console.log(this.startIndex)
-          //       this.transLate = `translateX(-${containerWidth * this.startIndex}px,0px)`;
-          //     }
-          //   } else if (disX >= 0) {
-          //     console.log(this.startIndex);
-          //     if (Math.abs(disX) < (containerWidth / 2)) { // 如果移动的距离不足容器的一半，则不会是下一个图片
-          //       this.transLate = `translateX(${containerWidth * this.startIndex}px)`;
-          //     }
-          //     this.startIndex++;
-          //     // if (this.startIndex < this.childrenLength) {
-          //     //   this.transLate = `translate(-${containerWidth * this.startIndex}px)`;
-          //     // } else if (this.startIndex >= this.childrenLength) {
-          //     //   this.startIndex = 0;
-          //     //   this.transLate = `translate(-${containerWidth * this.startIndex}px,0px)`;
-          //     // }
-          //   }
         }
       }
 
