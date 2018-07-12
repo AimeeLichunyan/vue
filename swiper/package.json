@@ -18,12 +18,13 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "f-lib": "git+http://gitlab.58corp.com/fangfe/flib.git#publish/1.0.1.1",
+    "f-ui": "git+http://gitlab.58corp.com/fangfe/f-ui.git#publish/1.1.0",
     "jsonp": "^0.2.1",
     "qs": "^6.5.1",
     "vue": "^2.5.2",
     "vue-lazyload": "^1.2.2",
-    "f-lib": "git+http://gitlab.58corp.com/fangfe/flib.git#publish/1.0.1.1",
-    "f-ui": "git+http://gitlab.58corp.com/fangfe/f-ui.git#publish/1.1.0"
+    "vue-swiper-component": "^2.1.2"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",

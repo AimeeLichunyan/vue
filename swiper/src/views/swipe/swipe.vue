@@ -59,13 +59,6 @@
       doTouchStart (ev) {
         ev = ev || event;
         ev.preventDefault();
-        // let touch = ev.touches[0];
-        // let dragState = this.dragState;
-        //  dragState.startLeft = touch.pageX;
-        //  dragState.startTop = touch.pageY;
-        //  dragState.startTopAbsolut = touch.clientY;
-
-        // console.log(index);
         if (ev.touches.length == 1) { // tounches类数组，等于1时表示此时有只有一只手指在触摸屏幕
           this.startX = ev.touches[0].clientX; // 记录开始位置
           // this.imgIndex = index;
@@ -78,7 +71,7 @@
         this.moveX = event.touches[0].clientX;
         // 实时的滑动的距离-起始位置=实时移动的位置
         let disX = (this.moveX - this.startX)
-        console.log(disX)
+        // console.log(disX)
         let startIndex = this.startIndex;
         let containerWidth = this.containerWidth;
         if (disX < 0) {
@@ -86,7 +79,7 @@
         } else {
           // console.log(disX)
           // console.log(startIndex)
-          console.log(startIndex)
+          // console.log(startIndex)
           if (startIndex == 0) {
             this.transLate = `translate(${Math.abs(startIndex * containerWidth - disX)}px)`;
           } else {
@@ -111,7 +104,7 @@
             this.startIndex++;
             if (Math.abs(disX) < (containerWidth / 2)) {
               // 如果移动的距离不足容器的一半，则不会是下一个图片
-              this.transLate = `translateX(-${containerWidth * this.startIndex}px)`;
+              this.transLate = `translateX(-${containerWidth * (this.startIndex - 1)}px)`;
             } else {
               this.transLate = `translateX(-${containerWidth * this.startIndex}px)`;
             }
@@ -125,9 +118,10 @@
             this.startIndex = this.startIndex - 1;
             if (Math.abs(disX) < (containerWidth / 2)) { // 如果移动的距离不足容器的一半，则不会是下一个图片
               // let index = this.startIndex;
-              this.transLate = `translateX(-${containerWidth * this.startIndex}px)`;
+              // console.log(containerWidth * this.startIndex)
+              this.transLate = `translateX(-${containerWidth * (this.startIndex + 1)}px)`;
             } else {
-              console.log(this.startIndex)
+              // console.log(this.startIndex)
               this.transLate = `translateX(-${containerWidth * this.startIndex}px)`;
             }
           }

@@ -28,6 +28,11 @@
       </div>
     </Swipe>
     </div>
+     <Swiper ref="swiper" :autoPlay="false"  v-if="list.length>0">
+            <Slide v-for="(item,index) in list" :key=index>
+                <img :src="item.img" />
+            </Slide>
+        </Swiper>
     <!-- <slot-popup v-if="show" @close="close">
         <p class="popup">这里是slot内容</p>
       </slot-popup> -->
@@ -36,11 +41,18 @@
 
 <script>
   /* 页面所需组件 */
-  import Swiper from './swiper';
+  // import Swiper from './swiper';
   import z_swipe from './swipe';
+  import { Swiper, Slide } from './indexSwipe';
   export default {
     data () {
       return {
+        index: 0,
+        list: [
+          { img: 'https://qiniu.epipe.cn/5456575529551388672?imageslim&imageView2/1/w/750/h/360' },
+          { img: 'https://qiniu.epipe.cn/5430983074181545984?imageslim&imageView2/1/w/750/h/360' },
+          { img: 'https://qiniu.epipe.cn/5464226412548325376?imageslim&imageView2/1/w/750/h/360' }
+        ]
       }
     },
     watch: {
@@ -52,14 +64,32 @@
     methods: {
     },
     components: {
+      // Swiper,
+      'Swipe': z_swipe,
       Swiper,
-      'Swipe': z_swipe
+      Slide
     }
   }
 </script>
 
 <style rel="stylesheet/less" lang="less">
   @import '../../assets/css/base.less';
+  .firstSwiper{
+height: 400px;
+.wh_content{
+height: 100%;
+.wh_swiper{
+height: 100%;
+.wh_slide{
+height: 100%;
+img{
+width: 100%;
+height: 100%;
+}
+}
+}
+}
+}
   .swiper-wrap {
     width: 750px;
     height: 521px;
