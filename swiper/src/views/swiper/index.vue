@@ -2,7 +2,7 @@
 
 <template>
 <div>
-     <Swiper ref="swiper" v-if="list.length>0">
+     <Swiper ref="swiper" :autoPlay="false" v-if="list.length>0">
             <Slide v-for="(item,index) in list" :key=index>
                 <img :src="item.img" />
             </Slide>
@@ -23,7 +23,7 @@
         index: 0,
         list: [
           { img: 'https://qiniu.epipe.cn/5456575529551388672?imageslim&imageView2/1/w/750/h/360' },
-          { img: 'https://qiniu.epipe.cn/5430983074181545984?imageslim&imageView2/1/w/750/h/360' },
+          { img: '//pic1.58cdn.com.cn/gongyu/n_v2fe540cbf552c4f61ba11e5da0e382988.jpg?w=700' },
           { img: 'https://qiniu.epipe.cn/5464226412548325376?imageslim&imageView2/1/w/750/h/360' }
         ]
       }

@@ -1,13 +1,16 @@
 <template>
-    <div class="wh_content">
+    <div class="wh_content" @touchmove="fn">
+    <div>
         <!-- 存放图片的大容器 -->
         <div class="wh_swiper" :class="className" @touchstart="doOnTouchStart" @touchmove="doOnTouchMove" @touchend="doOnTouchEnd">
             <slot></slot>
         </div>
+    </div>
         <!-- 底部图片数目展示 -->
-        <div class="wh_indicator">
+        <div class="wh_indicator" v-if="showIndicator">
             <div v-for="(tag,$index) in slidesLength" class="wh_indicator_item" :class="{ wh_show_bgcolor: index-1==$index }" :key="$index"> <span class="numWrap">{{$index + 1}}/{{slidesLength}}</span></div>
         </div>
+    
     </div>
 </template>
 <script>
@@ -15,6 +18,7 @@
     data () {
       return {
         slidesLength: 1, // 图片的个数
+        _width: 0,
         auto: true, // 是否轮播
         slideing: true,
         timer1: '',
@@ -25,7 +29,7 @@
           sx: 0,
           s: 0, // 开始点击的位置
           m: 0, // 移动的距离
-          e: 0
+          e: 0 // 结束的位置
         }
       }
     },
@@ -44,7 +48,8 @@
       },
       showIndicator: {
         default: true
-      }
+      },
+      classNum: String
     },
     mounted () {
       this.className = `wh_swiper_${Math.random().toFixed(3) * 1000}`
@@ -68,27 +73,27 @@
         }
       },
       doOnTouchMove (x) {
-        console.log(this.slideing)
-        console.log(this.t.s)
+        // console.log(this.slideing)
+        // console.log(this.t.s)
         if (this.slideing && this.t.s != -1) {
           this.clearTimeOut();
           this.t.m = x.touches[x.touches.length - 1].clientX - this.t.s;
           this.setTransform(this.t.m + this.t.sx);
-          console.log(this.t.sx)
+          console.log(x.touches)
         }
       },
-      doOnTouchEnd () {
+      doOnTouchEnd (x) {
         if (this.slideing && this.t.s != -1) {
           this.clearTimeOut();
           this.setTransform(this.t.m + this.t.sx);
           let x = this.getTransform();
-          x += this.t.m > 0 ? this._width * 0.3 : this.width * -0.3;
+          x += this.t.m > 0 ? this._width * 0.3 : this._width * -0.3;
           this.index = Math.round(x / this._width) * -1;
           this.wh('touch');
         }
       },
       setTransform (num) {
-        console.log(num)
+        // console.log(num)
         this.dom.transform = `translate3d(${num}px, 0px, 0px)`;
         this.dom['-webkit-transform'] = `translate3d(${num}px, 0px, 0px)`;
         this.dom['-ms-transform'] = `translate3d(${num}px, 0px, 0px)`;
@@ -102,7 +107,7 @@
       wh (type) {
         this.slideing = false;
         this.dom.transition = type == 'touch' ? '250ms' : this.duration + 'ms';
-        this.setTransform(this.index * -1 * this.width);
+        this.setTransform(this.index * -1 * this._width);
         this.t.m = 0;
         this.t.s = -1;
         if (this.autoPlay) {
@@ -138,6 +143,7 @@
         let SlideDom = document.querySelector('.' + this.className).getElementsByClassName('wh_slide');
         this.slidesLength = SlideDom.length;
         if (this.slidesLength > 1) {
+          console.log(SlideDom)
           let cloneDom1 = SlideDom[0].cloneNode(true);
           let cloneDom2 = SlideDom[this.slidesLength - 1].cloneNode(true);
           document.querySelector('.' + this.className).insertBefore(cloneDom2, SlideDom[0]);
@@ -161,6 +167,9 @@
         this.index = index + 1
         this.wh()
       },
+      fn (e) {
+        e.preventDefault()
+      },
       clearTimeOut () {
         this.auto = false;
         window.clearTimeout(this.timer1)
@@ -169,6 +178,7 @@
   }
 </script>
 <style lang="less">
+* { touch-action: none; } 
  .wh_content {
         position: relative;
         z-index: 1;
